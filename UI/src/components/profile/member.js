@@ -21,9 +21,9 @@ const Member = (member) => {
   const { name, avatar } = member;
   return (
     <StyledWrapper>      
-      <div onClick={member.openpopup}>
+      <div>
         <StyledAvatar>{avatar ? <img src={avatar} /> : defaultAvatar}</StyledAvatar>
-        <span>{name}</span>
+        <span>{name}</span><span>  <i className="float-right fas fa-user-plus pl-2 " onClick={member.openpopup}></i></span>
       </div>
     </StyledWrapper>
   );

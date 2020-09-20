@@ -7,34 +7,40 @@ const initialState = {
     familyData: data1
 };
 
-const reducer = (state = initialState, action) => {
-    let families = []
-    families = [...state.familyData]
-
-    console.log("families inside reducer", families)
-    let host= "http://localhost:5123"
-    const addFamily = (obj) => {
-        console.log("object",obj)
-
-        axios.post(`${host}/v1/family_tree`, obj.familyData[0])
+const host = "https://familytreeforsimform.herokuapp.com";
+const addFamily = (state,families,action) => {
+    
+    axios.post(`${host}/v1/family_tree`,action)
             .then(response => {
-                console.log("response", response)
-                families.push(response.data)
-                return [
+                families.push(response.data.data)                         
+                return {
                     ...state,
-                    families]
-
+                    familyData:[...families]
+                }
             })
             .catch(error => {
-                console.log("im in error")               
+                console.log("im in error", error)
             });
+             
+           
+            
+};
 
-    };
+const reducer = (state = initialState, action) => {
+    let families = []
+    families = [...initialState.familyData]
+
+    console.log("families inside reducer", families)
+   
+    
     switch (action.type) {
-        case actionTypes.ADD_FAMILY: return addFamily(state, action.familyData[0])
+        case actionTypes.ADD_FAMILY: return addFamily(state,families,action.familyData[0]);
+           
+           
         default:
             return state;
     }
 };
+
 
 export default reducer;

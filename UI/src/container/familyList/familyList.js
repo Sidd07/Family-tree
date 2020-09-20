@@ -41,7 +41,7 @@ class FamilyList extends Component {
         event.preventDefault();
         this.openModal();
         let obj = [{
-            "id": this.props.familyData.length+1,
+            "id": (this.props.familyData.length+1).toString(),
             "familyName": this.state.familyName,
             "name": this.state.firstName,
             "gender": this.state.gender,
@@ -82,6 +82,7 @@ class FamilyList extends Component {
 }
 
 const mapStateToProps = state => {
+    console.log(state)
     return {
         familyData: state.familyData
     };

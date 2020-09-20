@@ -55,8 +55,8 @@ export default class TreeRecursive extends Component {
             firstName: "",
             gender: " ",
         })
-
-        if (member.family.length <= 2) {
+        console.log("length",member.family.length )
+        if (member.family.length < 2) {
             member.family.push(obj)
         }else{
             this.setState({error:"max 2 nodes allowed"})
