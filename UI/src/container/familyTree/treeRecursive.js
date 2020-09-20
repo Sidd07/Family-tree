@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Member from '../../components/profile/member';
 
 import Modal from 'react-modal';
-import AddFamilyPopUp from '../../components/addFamilyPopUp/addFamilyPopup';
+import AddUpdateNode from '../../components/addUpdateNode/addUpdateNode';
 
 Modal.setAppElement('#root');
 const StyledWrapper = styled.div`
@@ -17,17 +17,15 @@ export default class TreeRecursive extends Component {
         super(props);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.openModal=this.openModal.bind(this);
+        this.openModal = this.openModal.bind(this);
     }
     state = {
         modalIsOpen: false,
-        familyName: " ",
-        firstName: " ",
-        gender: " "
+        name: "",
+        gender: ""
     }
 
     openModal = () => {
-        console.log("im in pop up")
         this.setState({ modalIsOpen: !this.state.modalIsOpen })
     }
 
@@ -40,26 +38,30 @@ export default class TreeRecursive extends Component {
             }
         )
     }
-    handleSubmit(event) {
+    handleSubmit(member, event) {
         event.preventDefault();
+        console.log("im member of node", member)
         this.openModal();
-        let obj = [{
-            "id": this.props.familyList.length + 1,
-            "familyName": this.state.familyName,
-            "firstName": this.state.firstName,
+        let obj = {
+            "name": this.state.name,
             "gender": this.state.gender,
-            "totalMembers": 1,
-            "family": []
-        }]
+            "family": [],
+            "error":""
+        }
 
         this.setState({
             modalIsOpen: false,
-            familyName: " ",
-            firstName: " ",
+            familyName: "",
+            firstName: "",
             gender: " ",
-
         })
-        this.props.onFamilyAdded(obj);
+
+        if (member.family.length <= 2) {
+            member.family.push(obj)
+        }else{
+            this.setState({error:"max 2 nodes allowed"})
+        }
+       
     }
 
 
@@ -72,15 +74,14 @@ export default class TreeRecursive extends Component {
             {this.props.members.map((member, i) => {
                 return <div key={`level-${level}-${i}`}>
                     <Member openpopup={this.openModal} {...member} />
-
-
                     {this.hasChildren(member) && <TreeRecursive members={member.family} level={level + 1} />}
 
                     {this.state.modalIsOpen ?
-                        <AddFamilyPopUp closeModal={this.openModal}
+                        <AddUpdateNode closeModal={this.openModal}
                             value={this.state}
+                            member={member}
                             handlechange={e => this.handleChange(e)}
-                            handleSubmit={this.handleSubmit}></AddFamilyPopUp> : null
+                            handleSubmit={this.handleSubmit}></AddUpdateNode> : null
                     }
                 </div>
             })}

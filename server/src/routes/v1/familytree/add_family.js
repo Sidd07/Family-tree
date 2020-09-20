@@ -42,10 +42,11 @@ const validate_body = async (body) => {
 
         //construct schema for valiation
         const schema = Joi.object({
+            id: Joi.string().required(),            
             name: Joi.string().required(),
             familyName: Joi.string().required(),
-            level: Joi.number().required(),
-            relation: Joi.string().required(),
+            level: Joi.number(),
+            relation: Joi.string(),
             gender: Joi.string().required(),
             totalMembers: Joi.number().required(),
             family: Joi.array().required(),
