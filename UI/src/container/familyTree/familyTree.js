@@ -1,19 +1,14 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
 import { connect } from 'react-redux';
 import * as actionTypes from '../../store/actions';
-import Modal from 'react-modal';
+
+import '../main.scss';
 import TreeRecursive from './treeRecursive'
 
 
-const StyledWrapper = styled.div`
-    display: flex;
-    justify-content: center;
-    margin-top: ${props => `${props.level * 30}px`};
-`
+
 
 class FamilyTree extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -21,18 +16,27 @@ class FamilyTree extends Component {
         }
     }
     componentDidMount() {
-        let path = this.props.location.pathname.split('/')[2]
+        let path = this.props.location.pathname.split('/')[2]        
         const data = this.props.familyData.filter(item => item.id == path)
-        this.setState({ indiviualData: data })
+        this.setState({ indiviualData: data })     
+       
+        if(data.length==0){
+            this.props.history.push('/')
+        }
+
     }
-    hasChildren(member) {
-        return member.family && member.family.length;
-    }
+   
     render() {
         return (
             <div>
                 {this.state.indiviualData && this.state.indiviualData.length > 0 ?
-                        (<TreeRecursive members={this.state.indiviualData} />) : null
+                    (
+                        <div>
+                            <div className="col-md-12 mt-2 mb-4 p-4 "><h4 className="float-left">Family Name: {this.state.indiviualData[0].familyName}</h4><button className="btn btn-primary float-right" onClick={e=>this.props.history.push('/')} >Save</button></div>
+                            <div className="mt-3">
+                            <TreeRecursive members={this.state.indiviualData} />
+                            </div>
+                        </div>) : null
                 }
             </div>
         )

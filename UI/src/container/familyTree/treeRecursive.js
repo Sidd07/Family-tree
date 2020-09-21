@@ -22,6 +22,7 @@ export default class TreeRecursive extends Component {
     state = {
         modalIsOpen: false,
         name: "",
+        relation:"",
         gender: ""
     }
 
@@ -45,28 +46,23 @@ export default class TreeRecursive extends Component {
         let obj = {
             "name": this.state.name,
             "gender": this.state.gender,
+            "relation":this.state.relation,
             "family": [],
             "error":""
         }
-
         this.setState({
             modalIsOpen: false,
-            familyName: "",
-            firstName: "",
+            name: "",
+            relation: "",
             gender: " ",
         })
-        console.log("length",member.family.length )
-        if (member.family.length < 2) {
-            member.family.push(obj)
-        }else{
-            this.setState({error:"max 2 nodes allowed"})
-        }
+        member.family.push(obj);       
        
     }
 
 
     hasChildren(member) {
-        return member.family && member.family.length;
+           return member.family && member.family.length;
     }
     render() {
         const level = this.props.level || 0;

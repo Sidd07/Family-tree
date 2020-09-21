@@ -1,46 +1,25 @@
 import * as actionTypes from './actions';
-import data from '../mockData/familyList'
-import data1 from '../mockData/family';
-import axios from "axios";
+import data from '../mockData/family';
 
 const initialState = {
-    familyData: data1
-};
-
-const host = "https://familytreeforsimform.herokuapp.com";
-const addFamily = (state,families,action) => {
-    
-    axios.post(`${host}/v1/family_tree`,action)
-            .then(response => {
-                families.push(response.data.data)                         
-                return {
-                    ...state,
-                    familyData:[...families]
-                }
-            })
-            .catch(error => {
-                console.log("im in error", error)
-            });
-             
-           
-            
+       familyData: data
 };
 
 const reducer = (state = initialState, action) => {
     let families = []
-    families = [...initialState.familyData]
+    families = [...state.familyData]
 
     console.log("families inside reducer", families)
-   
-    
     switch (action.type) {
-        case actionTypes.ADD_FAMILY: return addFamily(state,families,action.familyData[0]);
-           
-           
+        case actionTypes.ADD_FAMILY:
+            families.push(action.familyData[0])           
+            return {
+                ...state,
+                familyData: families
+             }      
         default:
             return state;
-    }
-};
+            }
+    };
 
-
-export default reducer;
+export default reducer; 

@@ -1,5 +1,4 @@
 import React from 'react';
-import Modal from 'react-modal';
 
 const customStyles = {
     content: {
@@ -20,44 +19,49 @@ const customStyles = {
     }
 };
 
-
-const AddUpdateNode = (props) => {
+const DeleteFamilyPopUp = (props) => {
     return (
         <div className='container-fluid'>
             <Modal isOpen={props.value.modalIsOpen}
                 style={customStyles}
                 contentLabel="Example Modal">
                 <div className='container-fluid'>
-                    <div className='row mb-3 mt-2'>
-                        <div className="col-md-11">
-                            <h6 className="text-primary"><b>Add Member</b></h6>
-                        </div>
-                        <div className="col-md-1">
-                            <i className="fas fa-times pointer" onClick={props.closeModal}></i>
+                    <div className='row heading'>
+                        <div className='col-md-12'>
+                            <div className='row'>
+                                <div className="col-md-11">
+                                    <p className="bold">Add Member</p>
+                                </div>
+                                <div className="col-md-1">
+                                    <i className="fas fa-times" onClick={props.closeModal}></i>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
-               </div>
+
+                </div>
                 <div className='row'>
                     <div className='col-md-11 pl-4'>
                         <form onSubmit={(e) => props.handleSubmit(props.member, e)}>
                             <div className="form-group">
-                                <label className="text-muted">First Name</label>
+                                <label>First Name</label>
                                 <input type="text"
-                                    className="form-control" name="name" id="" aria-describedby="helpId" placeholder="" value={props.value.name} onChange={e => props.handlechange(e)} required />
+                                    className="form-control" name="name" id="" aria-describedby="helpId" placeholder="" value={props.value.name} onChange={e => props.handlechange(e)} />
                             </div>
                             <div className="form-group">
-                                <label className="text-muted">Relation</label>
+                                <label>Relation</label>
                                 <input type="text"
-                                    className="form-control" name="relation" id="" aria-describedby="helpId" placeholder="" value={props.value.relation} onChange={e => props.handlechange(e)} required />
+                                    className="form-control" name="relation" id="" aria-describedby="helpId" placeholder="" value={props.value.relation} onChange={e => props.handlechange(e)} />
                             </div>
                             <br />
                             <div className="form-check form-check-inline">
-                                <label className="form-check-label text-muted" htmlFor="inlineRadio1">Gender</label>
-                                <input className="form-check-input ml-2" type="radio" name="gender" id="inlineRadio1" value="male" onChange={e => props.handlechange(e)} required />
+                                <label className="form-check-label" htmlFor="inlineRadio1">Gender</label>
+                                <input className="form-check-input ml-2" type="radio" name="gender" id="inlineRadio1" value="male" onChange={e => props.handlechange(e)} />
                                 <label className="form-check-label" htmlFor="inlineRadio1">Male</label>
                             </div>
                             <div className="form-check form-check-inline">
-                                <input className="form-check-input" type="radio" name="gender" id="inlineRadio2" value="female" onChange={e => props.handlechange(e)} required />
+                                <input className="form-check-input" type="radio" name="gender" id="inlineRadio2" value="female" onChange={e => props.handlechange(e)} />
                                 <label className="form-check-label" htmlFor="inlineRadio2">Female</label>
                             </div>
                             <div className="mt-4 mb-4">
@@ -75,4 +79,4 @@ const AddUpdateNode = (props) => {
 
 }
 
-export default AddUpdateNode;
+export default DeleteFamilyPopUp;

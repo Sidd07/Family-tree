@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ListBox from '../../components/listBox/listBox';
 import Modal from 'react-modal';
+import '../main.scss';
 import * as actionTypes from '../../store/actions';
 import AddFamilyPopUp from '../../components/addFamilyPopUp/addFamilyPopup';
 
@@ -18,10 +19,10 @@ class FamilyList extends Component {
     }
     state = {
         modalIsOpen: false,
-        familyName: " ",
-        firstName: " ",
-        gender: " "
-
+        familyName: "",
+        firstName: "",
+        gender: "",
+        disable:true
     }
 
     openModal = () => {
@@ -36,6 +37,7 @@ class FamilyList extends Component {
                 [name]: value
             }
         )
+       
     }
     handleSubmit(event) {
         event.preventDefault();
@@ -64,8 +66,10 @@ class FamilyList extends Component {
             <div className="App">
                 <div className="m-3">
                     <h3 >Welcome To FamilyTree App
-                        <i className="float-right pointer fas fa-user-plus p-3" onClick={this.openModal}></i>
-                        <i className="float-right fas fa-user-minus p-3 "></i></h3>
+                        <i className="float-right pointer fas fa-user-plus p-3" 
+                        data-toggle="tooltip" data-placement="bottom" title="Add Family" 
+                        onClick={this.openModal}></i>
+                       </h3>
                 </div>
                 <div className="container">
                     <ListBox list={this.props.familyData} />
@@ -74,7 +78,8 @@ class FamilyList extends Component {
                     <AddFamilyPopUp closeModal={this.openModal} 
                     value={this.state} 
                     handlechange={e => this.handleChange(e)} 
-                    handleSubmit={this.handleSubmit}></AddFamilyPopUp> : null
+                    handleSubmit={this.handleSubmit}
+                    disable={this.state.disable}></AddFamilyPopUp> : null
                 }
             </div>
         );

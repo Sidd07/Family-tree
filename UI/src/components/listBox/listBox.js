@@ -1,19 +1,19 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const ListBox = (props) => {
     let familyList = props.list;
-    console.log("family list",familyList)
+
     return (
-        < div className="row" >
+        < div className="row offset-md-3 " >
             {familyList.map((value, index) => {
                 return (
-                   <Link to={`/family/${value.id}`}> <div className="col bg-success text-white m-5" key={index} >
-                   <label>Family Name: <span>{value.familyName} </span>  </label>
-                   <label> Total Family Members: <span> {value.totalMembers} </span></label>
-                </div>
-                </Link>)
-
+                    <div key={index} className="col-md-6 bg-success text-white m-2 ">
+                        <Link to={`/family/${value.id}`} className="text-white" >
+                            <label className="pointer">Family Name: <span><b>{value.familyName}</b> </span>  </label><br />
+                            <label className="pointer"> Total Family Members: <span> {value.totalMembers} </span></label>
+                        </Link>
+                    </div>)
             })}
         </div >
     );
